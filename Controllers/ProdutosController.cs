@@ -10,8 +10,12 @@ public class ProdutosController : Controller
         conexoes = linkproduto;
     }
 
-    public IActionResult Index() => View(conexoes.produtos.ToList());
+    public IActionResult Index()
+    {
 
+        return View(conexoes.produtos.ToList());
+
+    }
     public IActionResult Create() => View();
 
     [HttpPost]
@@ -52,8 +56,12 @@ public class ProdutosController : Controller
     public IActionResult DeleteConfirmed(int id)
     {
         var produto = conexoes.produtos.Find(id);
-        conexoes.produtos.Remove(produto);
-        conexoes.SaveChanges();
+
+        if (produto != null)
+        {
+            conexoes.produtos.Remove(produto);
+            conexoes.SaveChanges();
+        }
         return RedirectToAction("Index");
     }
 

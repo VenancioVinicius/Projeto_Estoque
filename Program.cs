@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FabricaConexoes>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FabricaConexoes") ?? throw new InvalidOperationException("Connection string 'FabricaConexoes' not found.")));
 
+builder.Services.AddDbContext<FabricaConexoes>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("FabricaConexoes")));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -28,10 +30,8 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Produtos}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 
 app.Run();
-
-builder.Services.AddDbContext<FabricaConexoes>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("conexaoProdutos")));
